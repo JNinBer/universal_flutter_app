@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import 'dart:collection';
+import 'dart:developer';
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
 /// numExt
 extension NumExtensions on num {
@@ -29,23 +36,31 @@ extension DateTimeExt on DateTime {
 extension WidgetExtensions on Widget {
   Widget get sliver => SliverToBoxAdapter(child: this);
 
-  Widget symmetricPadding({double vertical = 0.0, double horizontal = 0.0}) => Padding(
-        padding: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
+  Widget symmetricPadding({double vertical = 0.0, double horizontal = 0.0}) =>
+      Padding(
+        padding:
+            EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
         child: this,
       );
 
-  Widget onlyPadding({left = 0.0, top = 0.0, right = 0.0, bottom = 0.0}) => Padding(
-        padding: EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),
+  Widget onlyPadding({left = 0.0, top = 0.0, right = 0.0, bottom = 0.0}) =>
+      Padding(
+        padding:
+            EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),
         child: this,
       );
 
-  Widget onlyMargin({left = 0.0, top = 0.0, right = 0.0, bottom = 0.0}) => Container(
-        margin: EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),
+  Widget onlyMargin({left = 0.0, top = 0.0, right = 0.0, bottom = 0.0}) =>
+      Container(
+        margin:
+            EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),
         child: this,
       );
 
-  Widget symmetricMargin({double vertical = 0.0, double horizontal = 0.0}) => Container(
-        margin: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
+  Widget symmetricMargin({double vertical = 0.0, double horizontal = 0.0}) =>
+      Container(
+        margin:
+            EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
         child: this,
       );
 }

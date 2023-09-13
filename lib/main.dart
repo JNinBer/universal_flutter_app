@@ -7,7 +7,8 @@ import 'src/app/routers/router.dart';
 
 final providerContainer = ProviderContainer();
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
 
   CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["xiongxinjiang@aliyun.com"])

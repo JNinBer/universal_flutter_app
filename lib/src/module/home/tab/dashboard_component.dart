@@ -6,7 +6,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class DashboardComponent extends ConsumerWidget {
   DashboardComponent({super.key});
 
-  final List<Color> colors = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
+  final List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow
+  ];
   final double radius = 100.0;
 
   final List<IconData> icons = [
@@ -53,7 +58,13 @@ class HorizontalBannerComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> cardData = ['Card 1', 'Card 2', 'Card 3', 'Card 4', 'Card 5'];
+    final List<String> cardData = [
+      'Card 1',
+      'Card 2',
+      'Card 3',
+      'Card 4',
+      'Card 5'
+    ];
 
     final scWidth = MediaQuery.sizeOf(context).width;
 
@@ -159,7 +170,8 @@ class _ProductTile extends StatelessWidget {
             ),
             child: const Text(
               '安装',
-              strutStyle: StrutStyle(fontSize: 14, height: 1.15, forceStrutHeight: true),
+              strutStyle: StrutStyle(
+                  fontSize: 14, height: 1.15, forceStrutHeight: true),
             ),
           )
         ],

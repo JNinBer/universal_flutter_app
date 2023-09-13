@@ -33,7 +33,8 @@ void main() {
     var curent = 2;
     var dayTotal = 4;
     var dayCount = 3;
-    var result = (((curent - 1) / total) + (dayCount / total / dayTotal)) / 100 * 100;
+    var result =
+        (((curent - 1) / total) + (dayCount / total / dayTotal)) / 100 * 100;
 
     var item = 1 / 20 / 100;
 

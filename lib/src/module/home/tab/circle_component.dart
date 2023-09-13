@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'dart:convert';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CircleComponent extends ConsumerWidget {
@@ -7,7 +6,7 @@ class CircleComponent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CustomScrollView(
+    return const CustomScrollView(
       slivers: [],
     );
   }

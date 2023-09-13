@@ -21,8 +21,8 @@ class PersonComponent extends ConsumerWidget {
               tileHighlightColor: Colors.black38,
               title: const Text('个人信息'),
               padding: const EdgeInsets.only(left: 16, right: 16),
-              onPressed: () =>
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('个人信息'))),
+              onPressed: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('个人信息'))),
             )
           ],
         ),

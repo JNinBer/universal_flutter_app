@@ -90,9 +90,12 @@ class _SettingsTileState extends State<SettingsTile> {
                 () => changePressState(isPressed: false),
               );
             },
-      onTapDown: (_) => widget.onPressed == null ? null : changePressState(isPressed: true),
-      onTapUp: (_) => widget.onPressed == null ? null : changePressState(isPressed: false),
-      onTapCancel: () => widget.onPressed == null ? null : changePressState(isPressed: false),
+      onTapDown: (_) =>
+          widget.onPressed == null ? null : changePressState(isPressed: true),
+      onTapUp: (_) =>
+          widget.onPressed == null ? null : changePressState(isPressed: false),
+      onTapCancel: () =>
+          widget.onPressed == null ? null : changePressState(isPressed: false),
       child: Container(
         height: widget.height,
         padding: widget.padding,
@@ -109,7 +112,8 @@ class _SettingsTileState extends State<SettingsTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.title != null) widget.title!,
-                  if (widget.title != null && widget.description != null) 4.vGap,
+                  if (widget.title != null && widget.description != null)
+                    4.vGap,
                   if (widget.description != null) widget.description!
                 ],
               ),
@@ -120,6 +124,8 @@ class _SettingsTileState extends State<SettingsTile> {
         ),
       ),
     );
-    return widget.divider != null ? Column(children: [item, widget.divider!]) : item;
+    return widget.divider != null
+        ? Column(children: [item, widget.divider!])
+        : item;
   }
 }
