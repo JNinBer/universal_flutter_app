@@ -7,8 +7,7 @@ import 'src/app/routers/router.dart';
 
 final providerContainer = ProviderContainer();
 void main() {
-  CatcherOptions debugOptions =
-      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
 
   CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["xiongxinjiang@aliyun.com"])
@@ -40,9 +39,7 @@ class UniversalApp extends ConsumerWidget {
       builder: DevicePreview.appBuilder,
       darkTheme: ThemeData.dark(),
       routerConfig: router,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
     );
   }
 }

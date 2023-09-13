@@ -34,7 +34,7 @@ printf '%s\n' "${avar}"
 
 fileList=$(git diff --diff-filter=d --cached --name-only)
 
-printf '%s\n' "${fileList}"
+printf '%s\' "${fileList}"
 
 # Flutter Analyzer
 printf "\e[33;1m%s\e[0m\n" '=== Running Flutter analyzer ==='
