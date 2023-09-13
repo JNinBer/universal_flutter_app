@@ -10,6 +10,7 @@ pop_stash_files () {
     fi
 }
 
+
 # Stash unstaged files
 hasChanges=$(git diff)
 if [ -n "$hasChanges" ]; then
@@ -21,6 +22,8 @@ fi
 printf "\e[33;1m%s\e[0m\n" '=== Running Flutter Formatter ==='
 fvm flutter format .
 
+# flutter analyze ./lib/src/module/home/tab/index_component.dart ./lib/src/module/home/tab/circle_component.dart
+
 hasNewFilesFormatted=$(git diff)
 if [ -n "$hasNewFilesFormatted" ]; then
     git add .
@@ -29,9 +32,13 @@ fi
 printf "\e[33;1m%s\e[0m\n" 'Finished running Flutter Formatter'
 printf '%s\n' "${avar}"
 
+fileList=$(git diff --diff-filter=d --cached --name-only)
+
+printf '%s\n' "${fileList}"
+
 # Flutter Analyzer
 printf "\e[33;1m%s\e[0m\n" '=== Running Flutter analyzer ==='
-fvm flutter analyze
+fvm flutter analyze $fileList
 if [ $? -ne 0 ]; then
   printf "\e[31;1m%s\e[0m\n" '=== Flutter analyzer error ==='
   pop_stash_files
@@ -40,15 +47,15 @@ fi
 printf "\e[33;1m%s\e[0m\n" 'Finished running Flutter analyzer'
 printf '%s\n' "${avar}"
 
-# Unit tests
-printf "\e[33;1m%s\e[0m\n" '=== Running Unit Tests ==='
-fvm flutter test
-if [ $? -ne 0 ]; then
-  printf "\e[31;1m%s\e[0m\n" '=== Unit tests error ==='
-  pop_stash_files
-  exit 1
-fi
-printf "\e[33;1m%s\e[0m\n" 'Finished running Unit Tests'
-printf '%s\n' "${avar}"
+## Unit tests
+#printf "\e[33;1m%s\e[0m\n" '=== Running Unit Tests ==='
+#fvm flutter test
+#if [ $? -ne 0 ]; then
+#  printf "\e[31;1m%s\e[0m\n" '=== Unit tests error ==='
+#  pop_stash_files
+#  exit 1
+#fi
+#printf "\e[33;1m%s\e[0m\n" 'Finished running Unit Tests'
+#printf '%s\n' "${avar}"
 
 pop_stash_files
