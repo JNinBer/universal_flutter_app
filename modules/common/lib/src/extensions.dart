@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:collection';
-import 'dart:developer';
 
 /// numExt
 extension NumExtensions on num {
@@ -91,7 +89,7 @@ extension BuildContextExtensions on BuildContext {
 
   /// 显示一个Overlay
   OverlayEntry addOverlay(WidgetBuilder builder) {
-    final overlayState = Overlay.of(this)!;
+    final overlayState = Overlay.of(this);
     final overlayEntry = OverlayEntry(builder: builder);
     overlayState.insert(overlayEntry);
     return overlayEntry;

@@ -27,17 +27,4 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
-
-  test('total is', () {
-    var total = 20;
-    var curent = 2;
-    var dayTotal = 4;
-    var dayCount = 3;
-    var result =
-        (((curent - 1) / total) + (dayCount / total / dayTotal)) / 100 * 100;
-
-    var item = 1 / 20 / 100;
-
-    print('$item ,$result');
-  });
 }

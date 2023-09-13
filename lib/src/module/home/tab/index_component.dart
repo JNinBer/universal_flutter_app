@@ -11,6 +11,6 @@ class IndexComponent extends ConsumerStatefulWidget {
 class _IndexComponentState extends ConsumerState<IndexComponent> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView();
+    return const CustomScrollView();
   }
 }
