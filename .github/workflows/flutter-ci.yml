@@ -1,0 +1,120 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze_test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Flutter 3.35.2
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.2'
+          channel: stable
+          cache: true
+
+      - name: 显示 Flutter/Dart 版本
+        run: |
+          flutter --version
+          dart --version
+
+      - name: 缓存 pub 依赖
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: 安装根依赖
+        run: flutter pub get
+
+      - name: 格式检查（不自动修复）
+        run: |
+          dart --version
+          # 检查根与各 package 的格式变更（有变更则失败）
+          dart format --output=none --set-exit-if-changed .
+
+      - name: 引导 Melos 工作区
+        run: dart run melos bootstrap
+
+      - name: 静态分析
+        run: dart run melos run analyze
+
+      - name: 依赖健康检查（仅输出，不阻塞）
+        run: |
+          set +e
+          dart run melos exec -- "dart pub outdated" || true
+
+      - name: 运行测试（含覆盖率）
+        run: dart run melos run test
+
+      - name: 合并覆盖率
+        run: |
+          chmod +x combine_coverage.sh || true
+          dart run melos run gen_coverage
+
+      - name: 上传覆盖率工件
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage_lcov
+          path: coverage_report/lcov.info
+          if-no-files-found: warn
+
+  build:
+    name: Build (Android APK & Web)
+    needs: analyze_test
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Flutter 3.35.2
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.2'
+          channel: stable
+          cache: true
+
+      - name: 安装依赖并引导工作区
+        run: |
+          flutter pub get
+          dart run melos bootstrap
+
+      - name: 构建 Android APK (release)
+        run: flutter build apk --release
+
+      - name: 上传 Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/*.apk
+          if-no-files-found: warn
+
+      - name: 构建 Web (release)
+        run: flutter build web --release
+
+      - name: 上传 Web 构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+          if-no-files-found: warn
