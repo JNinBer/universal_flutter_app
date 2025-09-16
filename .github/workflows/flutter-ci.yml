@@ -1,0 +1,68 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze_test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Flutter 3.35.2
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.2'
+          channel: stable
+          cache: true
+
+      - name: 显示 Flutter/Dart 版本
+        run: |
+          flutter --version
+          dart --version
+
+      - name: 缓存 pub 依赖
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: 安装根依赖
+        run: flutter pub get
+
+      - name: 引导 Melos 工作区
+        run: dart run melos bootstrap
+
+      - name: 静态分析
+        run: dart run melos run analyze
+
+      - name: 运行测试（含覆盖率）
+        run: dart run melos run test
+
+      - name: 合并覆盖率
+        run: |
+          chmod +x combine_coverage.sh || true
+          dart run melos run gen_coverage
+
+      - name: 上传覆盖率工件
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage_lcov
+          path: coverage_report/lcov.info
+          if-no-files-found: warn
